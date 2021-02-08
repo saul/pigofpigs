@@ -1,0 +1,33 @@
+.score-entry input {
+  width: 100%;
+}
+
+.invalid {
+  border: solid 2px #ed1b24;
+}
+
+.AddGamePage label {
+  font-weight: bold;
+}
+
+.AddGamePage label input {
+  display: block;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.player-list li {
+  margin: 5px 0;
+}
+
+.player-row {
+  display: flex;
+}
+
+.player-row input {
+  flex-grow: 1;
+}
+
+.player-row button {
+  margin-left: 10px;
+}
