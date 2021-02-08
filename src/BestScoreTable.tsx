@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import useFetch from "use-http";
 import { apiHost } from "./const";
 import { PositionEmoji } from "./PositionEmoji";
@@ -39,7 +40,7 @@ export function BestScoreTable(): JSX.Element {
             <td className="fill">
               <strong>{r.player}</strong>
               <br />
-              in <a href={`/game/${r.gameID}`}>{r.game}</a>
+              in <NavLink to={`/game/${r.gameID}`}>{r.game}</NavLink>
               <br />
               on <em>{new Date(r.date).toLocaleDateString()}</em>
             </td>

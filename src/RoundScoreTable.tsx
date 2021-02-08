@@ -50,7 +50,7 @@ export function RoundScoreTable({
             <td className="fill">
               <strong>{r.player}</strong>
               <br />
-              in round {r.round} of <a href={`/game/${r.gameID}`}>{r.game}</a>
+              in round {r.round} of <NavLink to={`/game/${r.gameID}`}>{r.game}</NavLink>
               <br />
               on <em>{new Date(r.date).toLocaleDateString()}</em>
             </td>
