@@ -5,14 +5,12 @@ import {
   Switch,
   Route,
   NavLink,
-  useHistory,
-  useLocation,
 } from "react-router-dom";
 import { LeaderboardPage } from "./LeaderboardPage";
 import { AddGamePage } from "./AddGamePage";
 import { GameDetail } from "./GameDetail";
 import useFetch from "use-http";
-import { Claims, Roles } from "./Claims";
+import { Roles } from "./Claims";
 import { apiHost } from "./const";
 
 function App() {

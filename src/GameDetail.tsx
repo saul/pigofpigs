@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory, useParams, useRouteMatch } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useFetch from "use-http";
 import { Roles } from "./Claims";
 import { apiHost } from "./const";
@@ -39,7 +39,7 @@ export function GameDetail({ roles }: GameDetailProps) {
   }
 
   if (!data) {
-    throw "unreachable";
+    throw new Error("unreachable");
   }
 
   function onDelete() {

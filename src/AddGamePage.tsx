@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { BestScoreTable } from "./BestScoreTable";
-import { RoundScoreTable } from "./RoundScoreTable";
+import { useState } from "react";
 import "./AddGamePage.css";
 import { useHistory } from "react-router-dom";
-import { Game, GamePlayer } from "./GameTypes";
-import useFetch from "use-http";
+import { Game } from "./GameTypes";
 import { apiHost } from "./const";
 
 function validateString(s: string) {
