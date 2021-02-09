@@ -92,7 +92,7 @@ export function GameDetail({ roles }: GameDetailProps) {
         </thead>
         <tbody>
           {Array.from({ length: 10 }, (_, roundIndex) => (
-            <tr key={roundIndex}>
+            <tr key={roundIndex} id={`round-${roundIndex + 1}`}>
               <th>#{roundIndex + 1}</th>
               {data.players.map((p, playerIndex) => (
                 <td key={playerIndex}>{p.scores[roundIndex]}</td>

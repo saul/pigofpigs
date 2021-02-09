@@ -4,11 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
+import logo from "./logo.png";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <div className="container">
+        <img src={logo} className="logo" alt="Pig of Pigs logo" />
+        <App />
+      </div>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")

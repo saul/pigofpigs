@@ -27,6 +27,16 @@ h4 {
   color: #008359;
 }
 
+.container {
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 15px;
+}
+
+.logo {
+  width: 100%;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -66,7 +76,8 @@ td.score {
   white-space: nowrap;
 }
 
-input, button {
+input,
+button {
   font-size: 1.1em;
   padding: 7px 10px;
   border-radius: 5px;
@@ -80,4 +91,8 @@ input {
 
 a {
   color: #e9231a;
+}
+
+a:hover {
+  cursor: url("cursor.png"), pointer;
 }

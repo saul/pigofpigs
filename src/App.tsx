@@ -1,11 +1,6 @@
 import React from "react";
-import logo from "./logo.png";
 import "./App.css";
-import {
-  Switch,
-  Route,
-  NavLink,
-} from "react-router-dom";
+import { Switch, Route, NavLink } from "react-router-dom";
 import { LeaderboardPage } from "./LeaderboardPage";
 import { AddGamePage } from "./AddGamePage";
 import { GameDetail } from "./GameDetail";
@@ -25,9 +20,7 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-
+    <>
       <nav>
         <ul>
           <li>
@@ -63,7 +56,7 @@ function App() {
           <h2>404</h2>
         </Route>
       </Switch>
-    </div>
+    </>
   );
 }
 

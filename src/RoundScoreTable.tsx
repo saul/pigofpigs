@@ -22,7 +22,7 @@ interface RoundScoreTableProps {
 export function RoundScoreTable({
   url,
   pointsTitle,
-  winnerEmoji
+  winnerEmoji,
 }: RoundScoreTableProps): JSX.Element {
   const { loading, error, data = [] } = useFetch<RoundScoreResult[]>(
     `${apiHost}/${url}`,
@@ -51,7 +51,10 @@ export function RoundScoreTable({
             <td className="fill">
               <strong>{r.player}</strong>
               <br />
-              in round {r.round} of <NavLink to={`/game/${r.gameID}`}>{r.game}</NavLink>
+              in round {r.round} of{" "}
+              <NavLink to={`/game/${r.gameID}`}>
+                {r.game}
+              </NavLink>
               <br />
               on <em>{new Date(r.date).toLocaleDateString()}</em>
             </td>
