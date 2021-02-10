@@ -208,7 +208,7 @@ export function AddGamePage() {
               {Array.from({ length: numRounds }, (_, index) => (
                 <tr key={index}>
                   <th>
-                    {numRounds > 10 && index == numRounds - 1 ? (
+                    {numRounds > 10 && index === numRounds - 1 ? (
                       <button type="button" onClick={removeRound}>
                         ➖
                       </button>
