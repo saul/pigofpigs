@@ -66,6 +66,8 @@ export function GameDetail({ roles }: GameDetailProps) {
   const orderedScores = data.players
     .map((p) => p.scores[9])
     .sort((a, b) => b - a);
+  
+  const numRounds = data.players[0].scores.length;
 
   return (
     <>
@@ -91,7 +93,7 @@ export function GameDetail({ roles }: GameDetailProps) {
           </tr>
         </thead>
         <tbody>
-          {Array.from({ length: 10 }, (_, roundIndex) => (
+          {Array.from({ length: numRounds }, (_, roundIndex) => (
             <tr key={roundIndex} id={`round-${roundIndex + 1}`}>
               <th>#{roundIndex + 1}</th>
               {data.players.map((p, playerIndex) => (

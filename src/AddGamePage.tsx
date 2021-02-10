@@ -17,19 +17,39 @@ interface FormPlayer {
   readonly scores: string[];
 }
 
-function makeEmptyPlayer(): FormPlayer {
-  return { name: "", scores: new Array(10).fill("0") };
+function makeEmptyPlayer(numRounds: number): FormPlayer {
+  return { name: "", scores: new Array(numRounds).fill("0") };
 }
 
 export function AddGamePage() {
   const [gameTitle, setGameTitle] = useState("");
   const [gameDate, setGameDate] = useState("");
+  const [numRounds, setNumRounds] = useState(10);
   const [players, setPlayers] = useState<FormPlayer[]>([
-    makeEmptyPlayer(),
-    makeEmptyPlayer(),
+    makeEmptyPlayer(numRounds),
+    makeEmptyPlayer(numRounds),
   ]);
   const [posting, setPosting] = useState(false);
   const history = useHistory();
+
+  function removeRound() {
+    if (numRounds <= 10) return;
+
+    setNumRounds(numRounds - 1);
+    setPlayers(
+      players.map((p) => ({ ...p, scores: p.scores.slice(0, numRounds - 1) }))
+    );
+  }
+
+  function addRound() {
+    setNumRounds(numRounds + 1);
+    setPlayers(
+      players.map((p) => ({
+        ...p,
+        scores: [...p.scores, p.scores[numRounds - 1]],
+      }))
+    );
+  }
 
   function submit() {
     const errors = [];
@@ -164,7 +184,7 @@ export function AddGamePage() {
         <li>
           <button
             onClick={() => {
-              setPlayers([...players, makeEmptyPlayer()]);
+              setPlayers([...players, makeEmptyPlayer(numRounds)]);
             }}
           >
             Add player
@@ -185,9 +205,17 @@ export function AddGamePage() {
               </tr>
             </thead>
             <tbody>
-              {Array.from({ length: 10 }, (_, index) => (
+              {Array.from({ length: numRounds }, (_, index) => (
                 <tr key={index}>
-                  <th>#{index + 1}</th>
+                  <th>
+                    {numRounds > 10 && index == numRounds - 1 ? (
+                      <button type="button" onClick={removeRound}>
+                        ➖
+                      </button>
+                    ) : (
+                      `#${index + 1}`
+                    )}
+                  </th>
                   {players.map((player, playerIndex) => (
                     <td key={playerIndex} className="score-entry">
                       <input
@@ -205,6 +233,16 @@ export function AddGamePage() {
                   ))}
                 </tr>
               ))}
+              <tr>
+                <th>
+                  <button type="button" onClick={addRound}>
+                    ➕
+                  </button>
+                </th>
+                <td colSpan={players.length}>
+                  Add tie breaker round
+                </td>
+              </tr>
             </tbody>
           </table>
 

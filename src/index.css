@@ -34,7 +34,9 @@ h4 {
 }
 
 .logo {
+  display: block;
   width: 100%;
+  margin-bottom: 15px;
 }
 
 table {
