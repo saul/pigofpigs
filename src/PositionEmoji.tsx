@@ -5,6 +5,17 @@ interface PositionEmojiProps {
   winnerEmoji?: string;
 }
 
+const ordinalRules = new Intl.PluralRules("en", { type: "ordinal" });
+const suffixes: any = {
+  one: "st",
+  two: "nd",
+  few: "rd",
+};
+function ordinal(number: number) {
+  const suffix = suffixes[ordinalRules.select(number)] || "th";
+  return number + suffix;
+}
+
 export function PositionEmoji({ position, winnerEmoji }: PositionEmojiProps) {
   if (position === 1) {
     return <>{winnerEmoji || "👑"}</>;
@@ -16,7 +27,7 @@ export function PositionEmoji({ position, winnerEmoji }: PositionEmojiProps) {
     return (
       <>
         {position.toString()}
-        <sup>th</sup>
+        <sup>{ordinal(position)}</sup>
       </>
     );
   }
