@@ -45,6 +45,14 @@ table {
   border-spacing: 0;
 }
 
+tr > :first-child {
+  padding-left: 0;
+}
+
+tr > :last-child {
+  padding-right: 0;
+}
+
 td,
 th {
   vertical-align: middle;
