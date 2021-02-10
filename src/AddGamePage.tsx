@@ -35,6 +35,9 @@ export function AddGamePage() {
   function removeRound() {
     if (numRounds <= 10) return;
 
+    if (!window.confirm("Are you sure you want to remove this tie breaker round?"))
+      return;
+
     setNumRounds(numRounds - 1);
     setPlayers(
       players.map((p) => ({ ...p, scores: p.scores.slice(0, numRounds - 1) }))
