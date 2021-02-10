@@ -12,8 +12,7 @@ const suffixes: any = {
   few: "rd",
 };
 function ordinal(number: number) {
-  const suffix = suffixes[ordinalRules.select(number)] || "th";
-  return number + suffix;
+  return suffixes[ordinalRules.select(number)] || "th";
 }
 
 export function PositionEmoji({ position, winnerEmoji }: PositionEmojiProps) {

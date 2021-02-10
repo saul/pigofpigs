@@ -47,12 +47,18 @@ table {
 
 td,
 th {
-  vertical-align: top;
+  vertical-align: middle;
   padding: 8px 5px;
 }
 
-th {
+thead th,
+tfoot th {
   text-align: left;
+}
+
+tbody th {
+  text-align: right;
+  vertical-align: middle;
 }
 
 td.score {

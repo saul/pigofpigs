@@ -146,51 +146,61 @@ export function AddGamePage() {
       </p>
 
       <h3>Players</h3>
-      <ol className="player-list">
-        {players.map((player, index) => (
-          <li key={index}>
-            <div className="player-row">
-              <input
-                type="text"
-                value={player.name}
-                placeholder={`Player #${index + 1}'s name`}
-                className={validateString(player.name) ? "" : "invalid"}
-                onChange={(e) => {
-                  players[index] = {
-                    ...players[index],
-                    name: e.target.value.trim(),
-                  };
-                  setPlayers([...players]);
-                }}
-              />
-              <button
-                tabIndex={-1}
-                onClick={() => {
-                  if (
-                    !window.confirm(
-                      "Are you sure you want to delete this player?"
+      <table>
+        <tbody>
+          {players.map((player, index) => (
+            <tr key={index}>
+              <td className="min-width">{index + 1}.</td>
+              <td className="fill">
+                <input
+                  type="text"
+                  value={player.name}
+                  placeholder={`Player #${index + 1}'s name`}
+                  className={
+                    "fill " + (validateString(player.name) ? "" : "invalid")
+                  }
+                  onChange={(e) => {
+                    players[index] = {
+                      ...players[index],
+                      name: e.target.value.trim(),
+                    };
+                    setPlayers([...players]);
+                  }}
+                />
+              </td>
+              <td className="min-width">
+                <button
+                  tabIndex={-1}
+                  onClick={() => {
+                    if (
+                      !window.confirm(
+                        "Are you sure you want to delete this player?"
+                      )
                     )
-                  )
-                    return;
-                  players.splice(index, 1);
-                  setPlayers([...players]);
+                      return;
+                    players.splice(index, 1);
+                    setPlayers([...players]);
+                  }}
+                >
+                  ❌
+                </button>
+              </td>
+            </tr>
+          ))}
+          <tr>
+            <td className="min-width" />
+            <td colSpan={2}>
+              <button
+                onClick={() => {
+                  setPlayers([...players, makeEmptyPlayer(numRounds)]);
                 }}
               >
-                ❌
+                Add player
               </button>
-            </div>
-          </li>
-        ))}
-        <li>
-          <button
-            onClick={() => {
-              setPlayers([...players, makeEmptyPlayer(numRounds)]);
-            }}
-          >
-            Add player
-          </button>
-        </li>
-      </ol>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       {players.length > 0 ? (
         <>
@@ -210,7 +220,7 @@ export function AddGamePage() {
                   <th>
                     {numRounds > 10 && index === numRounds - 1 ? (
                       <button type="button" onClick={removeRound}>
-                        ➖
+                        ❌
                       </button>
                     ) : (
                       `#${index + 1}`
@@ -233,17 +243,17 @@ export function AddGamePage() {
                   ))}
                 </tr>
               ))}
+            </tbody>
+            <tfoot>
               <tr>
                 <th>
                   <button type="button" onClick={addRound}>
                     ➕
                   </button>
                 </th>
-                <td colSpan={players.length}>
-                  Add tie breaker round
-                </td>
+                <th colSpan={players.length}>Add tie breaker round</th>
               </tr>
-            </tbody>
+            </tfoot>
           </table>
 
           <p>
