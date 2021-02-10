@@ -251,7 +251,9 @@ export function AddGamePage() {
                     ➕
                   </button>
                 </th>
-                <th colSpan={players.length}>Add tie breaker round</th>
+                <th colSpan={players.length}>
+                  Add {numRounds > 10 ? "another" : ""} tie breaker round
+                </th>
               </tr>
             </tfoot>
           </table>
