@@ -20,7 +20,8 @@ export function PlayersPage() {
   if (error) return <>Error: {error.message}</>;
   if (loading) return <>Loading...</>;
 
-  return (
+  return <>
+    <h2>Player league table</h2>
     <table>
       <thead>
         <tr>
@@ -47,5 +48,5 @@ export function PlayersPage() {
         ))}
       </tbody>
     </table>
-  );
+  </>;
 }
