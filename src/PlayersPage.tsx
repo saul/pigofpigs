@@ -8,6 +8,7 @@ interface Player {
   readonly gamesPlayed: number;
   readonly gamesWon: number;
   readonly averageScore: number;
+  readonly highestScore: number;
 }
 
 export function PlayersPage() {
@@ -30,7 +31,8 @@ export function PlayersPage() {
           <th className="min-width">P</th>
           <th className="min-width">W</th>
           <th className="min-width">L</th>
-          <th className="min-width">AvS</th>
+          <th className="min-width">Avg</th>
+          <th className="min-width">Best</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +46,7 @@ export function PlayersPage() {
             <td className="min-width fill">{p.gamesWon}</td>
             <td className="min-width fill">{p.gamesPlayed - p.gamesWon}</td>
             <td className="min-width right">{p.averageScore}</td>
+            <td className="min-width right">{p.highestScore}</td>
           </tr>
         ))}
       </tbody>
