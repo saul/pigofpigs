@@ -35,7 +35,9 @@ export function AddGamePage() {
   function removeRound() {
     if (numRounds <= 10) return;
 
-    if (!window.confirm("Are you sure you want to remove this tie breaker round?"))
+    if (
+      !window.confirm("Are you sure you want to remove this tie breaker round?")
+    )
       return;
 
     setNumRounds(numRounds - 1);
@@ -237,6 +239,24 @@ export function AddGamePage() {
                         className={
                           validateNumber(player.scores[index]) ? "" : "invalid"
                         }
+                        onBlur={() => {
+                          const text = player.scores[index];
+                          if (text.length > 1 && text[0] === "+") {
+                            const operandText = text.substring(1);
+                            if (!validateNumber(operandText)) return;
+                            const operand = parseInt(operandText);
+                            const previousRoundText =
+                              index === 0 ? "0" : player.scores[index - 1];
+                            const previousRound = validateNumber(
+                              previousRoundText
+                            )
+                              ? parseInt(previousRoundText)
+                              : 0;
+                            const newValue = previousRound + operand;
+                            player.scores[index] = newValue.toString();
+                            setPlayers([...players]);
+                          }
+                        }}
                         onChange={(e) => {
                           player.scores[index] = e.target.value.trim();
                           setPlayers([...players]);
