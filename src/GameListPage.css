@@ -14,9 +14,11 @@
 
 .game-card--players li {
   display: inline;
-  margin-right: 1rem;
+  margin-left: 1rem;
+  white-space: nowrap;
 }
 
 .game-card--players li.winner {
   font-weight: 600;
+  margin-left: 0;
 }

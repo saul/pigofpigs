@@ -30,10 +30,12 @@ export function GameListPage() {
   return (
     <>
       <h2>Games played</h2>
-      {data.map((game) => (
+      {data.map((game, gameIndex) => (
         <div className="game-card">
           <h3 className="game-card--title">
-            <NavLink to={`/game/${game.id}`}>{game.title}</NavLink>
+            <NavLink to={`/game/${game.id}`}>
+              #{data.length - gameIndex}. {game.title}
+            </NavLink>
           </h3>
           <div className="game-card--meta">
             Played on <em>{new Date(game.date).toLocaleDateString()}</em> by{" "}
