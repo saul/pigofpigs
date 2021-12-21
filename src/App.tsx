@@ -8,6 +8,7 @@ import useFetch from "use-http";
 import { Roles } from "./Claims";
 import { apiHost } from "./const";
 import { PlayersPage } from "./PlayersPage";
+import { GameListPage } from "./GameListPage";
 
 function App() {
   const { loading, data: roles } = useFetch<Roles>(
@@ -27,6 +28,11 @@ function App() {
           <li>
             <NavLink to="/" exact>
               Leaderboards
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/game">
+              Games
             </NavLink>
           </li>
           <li>
@@ -54,6 +60,9 @@ function App() {
         </Route>
         <Route path="/game/:id">
           <GameDetail roles={roles} />
+        </Route>
+        <Route path="/game" exact>
+          <GameListPage />
         </Route>
         <Route path="/players">
           <PlayersPage />

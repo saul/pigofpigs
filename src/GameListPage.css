@@ -1,0 +1,22 @@
+.game-card {
+  margin-bottom: 1rem;
+}
+
+.game-card--title {
+  margin: 0 0 0.5rem;
+}
+
+.game-card--players {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.game-card--players li {
+  display: inline;
+  margin-right: 1rem;
+}
+
+.game-card--players li.winner {
+  font-weight: 600;
+}
