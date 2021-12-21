@@ -24,10 +24,10 @@ export function PositionEmoji({ position, winnerEmoji }: PositionEmojiProps) {
     return <>🥉</>;
   } else {
     return (
-      <>
+      <small>
         {position.toString()}
         <sup>{ordinal(position)}</sup>
-      </>
+      </small>
     );
   }
 }

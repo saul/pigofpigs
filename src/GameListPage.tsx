@@ -38,7 +38,7 @@ export function GameListPage() {
             </NavLink>
           </h3>
           <div className="game-card--meta">
-            Played on <em>{new Date(game.date).toLocaleDateString()}</em> by{" "}
+            Played on <em>{new Date(game.date).toLocaleDateString()}</em> with{" "}
             {game.players.length} players
           </div>
           <ul className="game-card--players">
