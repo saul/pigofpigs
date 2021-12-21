@@ -44,8 +44,8 @@ export function GameListPage() {
           <ul className="game-card--players">
             {game.players.map((player, index) => (
               <li className={index === 0 ? "winner" : "loser"}>
-                <PositionEmoji position={index + 1} /> {player.name} (
-                {player.score})
+                <PositionEmoji position={index + 1} /> {player.name}:{" "}
+                {player.score}
               </li>
             ))}
           </ul>

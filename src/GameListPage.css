@@ -1,9 +1,13 @@
 .game-card {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .game-card--title {
   margin: 0 0 0.5rem;
+}
+
+.game-card--meta {
+  margin: 0.5rem 0;
 }
 
 .game-card--players {
