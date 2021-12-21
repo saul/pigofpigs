@@ -8,8 +8,9 @@ nav ul {
 }
 
 nav ul {
-  background-color: white;
-  border: solid 2px #008359;
+  color: var(--pig-back);
+  background-color: var(--pig-front);
+  border: solid 2px var(--pig-green);
   border-radius: 5px;
 }
 
@@ -25,10 +26,11 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  background-color: #f3f0ad;
+  color: var(--pig-front);
+  background-color: var(--pig-back);
 }
 
 nav ul li a.active {
-  color: #f3f0ad;
-  background-color: #008359;
+  color: var(--pig-front);
+  background-color: var(--pig-green);
 }
