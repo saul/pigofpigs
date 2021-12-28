@@ -6,8 +6,8 @@ html {
   --pig-green: #008359;
   --pig-light: #f3f0ad;
   --pig-dark: #27251d;
-  --pig-front: var(--pig-light);
-  --pig-back: var(--pig-dark);
+  --pig-front: var(--pig-dark);
+  --pig-back: var(--pig-light);
 }
 
 body {
@@ -17,15 +17,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--pig-front);
-  color: var(--pig-back);
+  background-color: var(--pig-back);
+  color: var(--pig-front);
   overflow-y: scroll;
 }
 
 @media (prefers-color-scheme: dark) {
   body {
-    --pig-front: var(--pig-dark);
-    --pig-back: var(--pig-light);
+    --pig-front: var(--pig-light);
+    --pig-back: var(--pig-dark);
   }
 }
 
