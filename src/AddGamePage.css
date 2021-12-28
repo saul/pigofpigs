@@ -6,6 +6,10 @@
   border: solid 2px #ed1b24;
 }
 
+.AddGamePage {
+  margin-bottom: 5rem;
+}
+
 .AddGamePage label {
   font-weight: bold;
 }

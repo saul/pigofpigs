@@ -1,0 +1,11 @@
+.entry-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--pig-back);
+}
+
+.entry-buttons button {
+  margin-right: 1rem;
+}

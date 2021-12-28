@@ -3,6 +3,11 @@ import "./AddGamePage.css";
 import { useHistory } from "react-router-dom";
 import { Game } from "./GameTypes";
 import { apiHost } from "./const";
+import {
+  ScoreEntryAction,
+  ScoreEntryButtons,
+  ScoreEntryCallback,
+} from "./ScoreEntryButtons";
 
 function validateString(s: string) {
   return s.length > 0;
@@ -31,6 +36,8 @@ export function AddGamePage() {
   ]);
   const [posting, setPosting] = useState(false);
   const history = useHistory();
+  const [scoreEntryCallback, setScoreEntryCallback] =
+    useState<ScoreEntryCallback | null>(null);
 
   function removeRound() {
     if (numRounds <= 10) return;
@@ -119,6 +126,61 @@ export function AddGamePage() {
       .finally(() => {
         setPosting(false);
       });
+  }
+
+  function renderScoreCell(
+    index: number,
+    player: FormPlayer,
+    playerIndex: number
+  ) {
+    const previousRoundText = index === 0 ? "0" : player.scores[index - 1];
+    const previousRound = validateNumber(previousRoundText)
+      ? parseInt(previousRoundText)
+      : 0;
+
+    return (
+      <td key={playerIndex} className="score-entry">
+        <input
+          type="text"
+          value={player.scores[index]}
+          className={validateNumber(player.scores[index]) ? "" : "invalid"}
+          onFocus={(e) => {
+            // Don't select the text if the focus was triggered by a button
+            // (e.g. the "+" or "Pigged out" buttons)
+            if (!(e.relatedTarget instanceof HTMLButtonElement)) {
+              e.target.select();
+            }
+
+            setScoreEntryCallback(() => (action: ScoreEntryAction) => {
+              if (action === "pigged-out") {
+                player.scores[index] = previousRound.toString();
+              } else if (action === "add-plus") {
+                player.scores[index] = "+";
+              }
+
+              setPlayers([...players]);
+              e.target.focus();
+            });
+          }}
+          onBlur={() => {
+            //setScoreEntryCallback(null);
+            const text = player.scores[index];
+            if (text.length > 1 && text[0] === "+") {
+              const operandText = text.substring(1);
+              if (!validateNumber(operandText)) return;
+              const operand = parseInt(operandText);
+              const newValue = previousRound + operand;
+              player.scores[index] = newValue.toString();
+              setPlayers([...players]);
+            }
+          }}
+          onChange={(e) => {
+            player.scores[index] = e.target.value.trim();
+            setPlayers([...players]);
+          }}
+        />
+      </td>
+    );
   }
 
   return (
@@ -231,39 +293,7 @@ export function AddGamePage() {
                       `#${index + 1}`
                     )}
                   </th>
-                  {players.map((player, playerIndex) => (
-                    <td key={playerIndex} className="score-entry">
-                      <input
-                        type="text"
-                        value={player.scores[index]}
-                        className={
-                          validateNumber(player.scores[index]) ? "" : "invalid"
-                        }
-                        onBlur={() => {
-                          const text = player.scores[index];
-                          if (text.length > 1 && text[0] === "+") {
-                            const operandText = text.substring(1);
-                            if (!validateNumber(operandText)) return;
-                            const operand = parseInt(operandText);
-                            const previousRoundText =
-                              index === 0 ? "0" : player.scores[index - 1];
-                            const previousRound = validateNumber(
-                              previousRoundText
-                            )
-                              ? parseInt(previousRoundText)
-                              : 0;
-                            const newValue = previousRound + operand;
-                            player.scores[index] = newValue.toString();
-                            setPlayers([...players]);
-                          }
-                        }}
-                        onChange={(e) => {
-                          player.scores[index] = e.target.value.trim();
-                          setPlayers([...players]);
-                        }}
-                      />
-                    </td>
-                  ))}
+                  {players.map((p, i) => renderScoreCell(index, p, i))}
                 </tr>
               ))}
             </tbody>
@@ -287,6 +317,10 @@ export function AddGamePage() {
             </button>
           </p>
         </>
+      ) : null}
+
+      {scoreEntryCallback != null ? (
+        <ScoreEntryButtons onAction={scoreEntryCallback} />
       ) : null}
     </div>
   );
