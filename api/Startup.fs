@@ -1,5 +1,6 @@
 namespace PigOfPigs
 
+open System.Net
 open Microsoft.AspNetCore.Authentication.Cookies
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
@@ -55,10 +56,13 @@ type Startup(configuration: IConfiguration) =
         if env.IsDevelopment() then
             app.UseDeveloperExceptionPage() |> ignore
 
-        ForwardedHeadersOptions(
-            ForwardedHeaders=(ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto ||| ForwardedHeaders.XForwardedPrefix)
-        )
-        |> app.UseForwardedHeaders
+        let forwardedHeaderOptions =
+            ForwardedHeadersOptions(
+                ForwardedHeaders=(ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto ||| ForwardedHeaders.XForwardedPrefix)
+            )
+        forwardedHeaderOptions.KnownNetworks.Add(IPNetwork(IPAddress.Parse "172.18.0.0", 16))
+
+        app.UseForwardedHeaders forwardedHeaderOptions
         |> ignore
 
         app
