@@ -1,0 +1,30 @@
+localhost:80 {
+    handle /api/* {
+        reverse_proxy api:5000
+    }
+
+    handle /health {
+        reverse_proxy api:5000
+    }
+
+    handle {
+        root * /srv/frontend
+        file_server
+        try_files {path} /index.html
+    }
+
+    encode gzip
+
+    header {
+        X-Frame-Options "SAMEORIGIN"
+        X-XSS-Protection "1; mode=block"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "no-referrer-when-downgrade"
+        X-Robots-Tag "noindex, nofollow"
+    }
+
+    log {
+        output stdout
+        format console
+    }
+}

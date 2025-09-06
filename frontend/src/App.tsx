@@ -31,9 +31,7 @@ function App() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/game">
-              Games
-            </NavLink>
+            <NavLink to="/game">Games</NavLink>
           </li>
           <li>
             <NavLink to="/players" exact>
