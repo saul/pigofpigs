@@ -1,0 +1,51 @@
+{
+  "title": "Europigean Finals",
+  "date": "2021-07-11T00:00:00",
+  "players": [
+    {
+      "name": "AndrewLauren",
+      "scores": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        30,
+        30,
+        82,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "RichcliffeJosh",
+      "scores": [
+        20,
+        20,
+        20,
+        20,
+        61,
+        61,
+        61,
+        99,
+        149,
+        181
+      ]
+    },
+    {
+      "name": "SaraJordan",
+      "scores": [
+        0,
+        24,
+        47,
+        75,
+        113,
+        113,
+        137,
+        137,
+        170,
+        183
+      ]
+    }
+  ]
+}

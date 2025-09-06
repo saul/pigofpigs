@@ -1,0 +1,51 @@
+{
+  "title": "Austriapigs2",
+  "date": "2022-08-06T00:00:00",
+  "players": [
+    {
+      "name": "CourtneyJuliet",
+      "scores": [
+        20,
+        20,
+        31,
+        51,
+        51,
+        67,
+        67,
+        67,
+        87,
+        87
+      ]
+    },
+    {
+      "name": "WillemMarcusKarl",
+      "scores": [
+        0,
+        0,
+        0,
+        27,
+        27,
+        47,
+        47,
+        47,
+        47,
+        47
+      ]
+    },
+    {
+      "name": "JoshPhilippa",
+      "scores": [
+        0,
+        0,
+        24,
+        51,
+        51,
+        71,
+        71,
+        71,
+        101,
+        114
+      ]
+    }
+  ]
+}

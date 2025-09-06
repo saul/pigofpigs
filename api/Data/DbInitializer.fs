@@ -1,12 +1,16 @@
 ﻿namespace PigOfPigs.Data
 
 open System
+open System.IO
+open System.Text.Json
+open Microsoft.Extensions.DependencyInjection
 open PigOfPigs.Models
 
 [<RequireQualifiedAccess>]
 module DbInitializer =
 
-    let ensureCreated (context : PigContext) : unit =
+    let ensureCreated (services : IServiceProvider) : unit =
+        let context = services.GetRequiredService<PigContext>()
         context.Database.EnsureCreated() |> ignore
 
         if not (Seq.isEmpty context.Players) then ()
@@ -55,4 +59,16 @@ module DbInitializer =
         |> context.Games.Add
         |> ignore
 
+        // Create Game #1
         context.SaveChanges() |> ignore
+
+        // Create the rest of the scraped games
+        let serializerOptions = JsonSerializerOptions(PropertyNamingPolicy=JsonNamingPolicy.CamelCase)
+
+        Directory.GetFiles("scraped", "game_*.json")
+        |> Seq.iter (fun path ->
+            let contents = File.ReadAllText path
+            let game = JsonSerializer.Deserialize<CreateGameRequest>(contents, serializerOptions)
+
+            context.CreateGame(game).Result |> ignore
+        )

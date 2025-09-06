@@ -50,3 +50,26 @@ and [<AllowNullLiteral>] Game () =
     member val Date : DateTime = DateTime.MinValue with get, set
 
     member val Results : PlayerResult ICollection = null with get, set
+
+[<CLIMutable>]
+type CreateGamePlayer =
+    {
+        [<Required>]
+        Name : string
+
+        [<MinLength 10>]
+        Scores : int[]
+    }
+
+[<CLIMutable>]
+type CreateGameRequest =
+    {
+        [<Required>]
+        Title : string
+
+        [<Required>]
+        Date : DateTime
+
+        [<MinLength 2>]
+        Players : CreateGamePlayer[]
+    }

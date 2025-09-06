@@ -1,5 +1,6 @@
 ﻿namespace PigOfPigs.Data
 
+open System.Threading.Tasks
 open Microsoft.EntityFrameworkCore
 open PigOfPigs.Models
 
@@ -31,3 +32,68 @@ type PigContext(options : PigContext DbContextOptions) =
 
         modelBuilder.Entity<PlayerResult>().ToTable("PlayerResult") |> ignore
         modelBuilder.Entity<Game>().ToTable("Game") |> ignore
+
+    member this.CreateGame(game : CreateGameRequest) = task {
+        let rounds = game.Players |> Seq.map (fun p -> p.Scores.Length) |> Seq.max
+
+        let maxRoundScores =
+            [|
+                for i in 0..rounds-1 ->
+                    game.Players
+                    |> Seq.map (fun p -> p.Scores.[i])
+                    |> Seq.max
+            |]
+
+        let winningPoints = Array.last maxRoundScores
+
+        let toPlayerResultAsync (createPlayer : CreateGamePlayer) =
+            let finalScore, reverseRoundPoints =
+                createPlayer.Scores
+                |> Seq.indexed
+                |> Seq.fold
+                    (fun (scoreLastRound, points) (i, scoreThisRound) ->
+                        let roundPoints =
+                            RoundPoints(
+                                Round=i + 1,
+                                Points=scoreThisRound - scoreLastRound,
+                                TrailingBy=maxRoundScores.[i] - scoreThisRound
+                            )
+                        scoreThisRound, roundPoints::points
+                    )
+                    (0, [])
+
+            task {
+                let! player = this.Players.FirstOrDefaultAsync(fun p -> p.Name = createPlayer.Name)
+                return
+                    PlayerResult(
+                        Player=(if isNull player then Player(Name=createPlayer.Name) else player),
+                        FinalScore=finalScore,
+                        Winner=(finalScore = winningPoints),
+                        RoundPoints=(reverseRoundPoints |> Seq.rev |> Array.ofSeq)
+                    )
+            }
+
+        let! playerResults =
+            Task.WhenAll [|
+                for player in game.Players ->
+                    for score in player.Scores do
+                        if score < 0 then failwithf "Invalid score %d for player %s" score player.Name
+                    toPlayerResultAsync player
+            |]
+
+        let game =
+            Game(
+                Title=game.Title,
+                Date=game.Date,
+                Results=playerResults
+            )
+
+        game
+        |> this.Games.Add
+        |> ignore
+
+        let! _ = this.SaveChangesAsync()
+
+        return game
+    }
+

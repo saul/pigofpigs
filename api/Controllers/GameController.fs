@@ -12,29 +12,6 @@ open PigOfPigs.Models
 open Microsoft.EntityFrameworkCore
 open FSharp.Control.Tasks.V2
 
-[<CLIMutable>]
-type CreateGamePlayer =
-    {
-        [<Required>]
-        Name : string
-
-        [<MinLength 10>]
-        Scores : int[]
-    }
-
-[<CLIMutable>]
-type CreateGameRequest =
-    {
-        [<Required>]
-        Title : string
-
-        [<Required>]
-        Date : DateTime
-
-        [<MinLength 2>]
-        Players : CreateGamePlayer[]
-    }
-
 [<ApiController>]
 [<Route("game")>]
 type GameController (logger : ILogger<GameController>, pigContext : PigContext) =
@@ -107,68 +84,8 @@ type GameController (logger : ILogger<GameController>, pigContext : PigContext) 
         elif not (this.User.IsAdmin()) then
             return this.StatusCode(403, "You are not allowed to add new games") :> _
         else
-
-        let rounds = game.Players |> Seq.map (fun p -> p.Scores.Length) |> Seq.max
-
-        let maxRoundScores =
-            [|
-                for i in 0..rounds-1 ->
-                    game.Players
-                    |> Seq.map (fun p -> p.Scores.[i])
-                    |> Seq.max
-            |]
-
-        let winningPoints = Array.last maxRoundScores
-
-        let toPlayerResultAsync (createPlayer : CreateGamePlayer) =
-            let finalScore, reverseRoundPoints =
-                createPlayer.Scores
-                |> Seq.indexed
-                |> Seq.fold
-                    (fun (scoreLastRound, points) (i, scoreThisRound) ->
-                        let roundPoints =
-                            RoundPoints(
-                                Round=i + 1,
-                                Points=scoreThisRound - scoreLastRound,
-                                TrailingBy=maxRoundScores.[i] - scoreThisRound
-                            )
-                        scoreThisRound, roundPoints::points
-                    )
-                    (0, [])
-
-            task {
-                let! player = pigContext.Players.FirstOrDefaultAsync(fun p -> p.Name = createPlayer.Name)
-                return
-                    PlayerResult(
-                        Player=(if isNull player then Player(Name=createPlayer.Name) else player),
-                        FinalScore=finalScore,
-                        Winner=(finalScore = winningPoints),
-                        RoundPoints=(reverseRoundPoints |> Seq.rev |> Array.ofSeq)
-                    )
-            }
-
-        let! playerResults =
-            Task.WhenAll [|
-                for player in game.Players ->
-                    for score in player.Scores do
-                        if score < 0 then failwithf "Invalid score %d for player %s" score player.Name
-                    toPlayerResultAsync player
-            |]
-
-        let game =
-            Game(
-                Title=game.Title,
-                Date=game.Date,
-                Results=playerResults
-            )
-
-        game
-        |> pigContext.Games.Add
-        |> ignore
-
-        let! _ = pigContext.SaveChangesAsync()
-
-        return this.Ok({| id = game.ID |}) :> _
+            let! game = pigContext.CreateGame game
+            return this.Ok({| id = game.ID |}) :> _
     }
 
     [<HttpPost; Route "{id}/delete">]

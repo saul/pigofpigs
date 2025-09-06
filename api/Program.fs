@@ -18,8 +18,7 @@ module Program =
     let createDbIfNotExists (host : IHost) =
         use scope = host.Services.CreateScope()
         let services = scope.ServiceProvider
-        let context = services.GetRequiredService<PigContext>()
-        DbInitializer.ensureCreated context
+        DbInitializer.ensureCreated services
 
     [<EntryPoint>]
     let main args =
