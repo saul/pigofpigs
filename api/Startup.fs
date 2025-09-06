@@ -56,7 +56,7 @@ type Startup(configuration: IConfiguration) =
             app.UseDeveloperExceptionPage() |> ignore
 
         ForwardedHeadersOptions(
-            ForwardedHeaders=(ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto)
+            ForwardedHeaders=(ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto ||| ForwardedHeaders.XForwardedPrefix)
         )
         |> app.UseForwardedHeaders
         |> ignore
