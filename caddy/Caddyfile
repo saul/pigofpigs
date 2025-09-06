@@ -1,4 +1,4 @@
-localhost:80 {
+http:// {
     handle /api/* {
         reverse_proxy api:5000
     }
