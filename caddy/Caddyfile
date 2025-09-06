@@ -1,12 +1,15 @@
 {
     servers {
-        trusted_proxies static private_ranges
+        # 172.18.0.0/16 is the CIDR of the Docker network
+        trusted_proxies static private_ranges 172.18.0.0/16
     }
 }
 
 http:// {
     handle_path /api/* {
-        reverse_proxy api:5000
+        reverse_proxy api:5000 {
+            header_up X-Forwarded-Prefix "/api"
+        }
     }
 
     handle /health {
