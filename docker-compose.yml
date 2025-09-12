@@ -49,7 +49,7 @@ services:
       - frontend
 
 networks:
-  # Code and Caddyfile assume that the network is 172.18.0.0/16
+  # Code and Caddyfile assume that the network is 172.16.0.0/12
   app-network:
     driver: bridge
 

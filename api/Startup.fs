@@ -60,7 +60,7 @@ type Startup(configuration: IConfiguration) =
             ForwardedHeadersOptions(
                 ForwardedHeaders=(ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto ||| ForwardedHeaders.XForwardedPrefix)
             )
-        forwardedHeaderOptions.KnownNetworks.Add(IPNetwork(IPAddress.Parse "172.18.0.0", 16))
+        forwardedHeaderOptions.KnownNetworks.Add(IPNetwork(IPAddress.Parse "172.16.0.0", 12))
 
         app.UseForwardedHeaders forwardedHeaderOptions
         |> ignore
